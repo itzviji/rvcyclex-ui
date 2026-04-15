@@ -1,0 +1,103 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<!-- Filter Sidebar -->
+<p-sidebar [(visible)]="filterVisible" position="right" [style]="{width: '320px'}" header="Filter Patients">
+  <div class="filter-group">
+    <label class="filter-label">Name</label>
+    <input pInputText [(ngModel)]="filterName" placeholder="Search by name" class="w-full" />
+  </div>
+  <div class="filter-group">
+    <label class="filter-label">Phone</label>
+    <input pInputText [(ngModel)]="filterPhone" placeholder="Search by phone" class="w-full" />
+  </div>
+  <div class="filter-group">
+    <label class="filter-label">Payer</label>
+    <input pInputText [(ngModel)]="filterPayer" placeholder="Search by payer" class="w-full" />
+  </div>
+  <div class="filter-group">
+    <label class="filter-label">Gender</label>
+    <p-dropdown [options]="genderOptions" [(ngModel)]="filterGender" placeholder="All" [showClear]="true" styleClass="w-full"></p-dropdown>
+  </div>
+  <div class="filter-group">
+    <label class="filter-label">Status</label>
+    <p-dropdown [options]="statusOptions" [(ngModel)]="filterStatus" placeholder="All" [showClear]="true" styleClass="w-full"></p-dropdown>
+  </div>
+  <div class="filter-actions">
+    <p-button label="Apply" icon="pi pi-check" size="small" (onClick)="applyFilters()"></p-button>
+    <p-button label="Clear" icon="pi pi-times" size="small" [outlined]="true" (onClick)="clearFilters()"></p-button>
+  </div>
+</p-sidebar>
+
+<!-- Page Header -->
+<div class="page-header">
+  <h2>Patients</h2>
+  <div class="header-actions">
+    <p-button icon="pi pi-download" label="Export" [outlined]="true" size="small" (onClick)="exportCSV()"></p-button>
+    <p-button icon="pi pi-plus" label="Register Patient" size="small" (onClick)="openForm()"></p-button>
+  </div>
+</div>
+
+<!-- Table Card -->
+<div class="table-card">
+  <p-table #dt [value]="patients" [loading]="loading" [paginator]="true" [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 25, 50]"
+    [globalFilterFields]="['name', 'phone', 'email', 'payerName', 'policyNumber']"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+    dataKey="patientId" [rowHover]="true" styleClass="p-datatable-sm">
+
+    <ng-template pTemplate="caption">
+      <div class="table-toolbar">
+        <div class="table-toolbar-left">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Search..." />
+          </span>
+          <p-button icon="pi pi-filter" [outlined]="true" size="small"
+                    [badge]="activeFilterCount > 0 ? '' + activeFilterCount : undefined"
+                    badgeClass="p-badge-danger"
+                    pTooltip="Filters" (onClick)="filterVisible = true"></p-button>
+        </div>
+        <span class="record-count">{{ patients.length }} records</span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="patientId" style="width: 70px">ID <p-sortIcon field="patientId"></p-sortIcon></th>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="dob">DOB <p-sortIcon field="dob"></p-sortIcon></th>
+        <th pSortableColumn="gender">Gender <p-sortIcon field="gender"></p-sortIcon></th>
+        <th>Phone</th>
+        <th pSortableColumn="payerName">Payer <p-sortIcon field="payerName"></p-sortIcon></th>
+        <th>Policy #</th>
+        <th pSortableColumn="eligibilityStatus">Status <p-sortIcon field="eligibilityStatus"></p-sortIcon></th>
+        <th style="width: 90px">Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-p>
+      <tr>
+        <td>{{ p.patientId }}</td>
+        <td class="font-semibold">{{ p.name }}</td>
+        <td>{{ p.dob }}</td>
+        <td>{{ p.gender }}</td>
+        <td>{{ p.phone }}</td>
+        <td>{{ p.payerName }}</td>
+        <td>{{ p.policyNumber }}</td>
+        <td><p-tag [value]="p.eligibilityStatus" [severity]="getStatusSeverity(p.eligibilityStatus)"></p-tag></td>
+        <td>
+          <div class="action-btns">
+            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" size="small" pTooltip="Edit" (onClick)="openForm(p)"></p-button>
+            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" size="small" severity="danger" pTooltip="Delete" (onClick)="deletePatient(p)"></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="9" class="text-center p-4">No patients found.</td></tr>
+    </ng-template>
+  </p-table>
+</div>

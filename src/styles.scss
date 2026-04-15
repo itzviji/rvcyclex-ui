@@ -1,0 +1,502 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; color: #1F2937; background: #F9FAFB; }
+
+// PrimeNG
+@import "primeng/resources/themes/lara-light-pink/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+
+// ═══════════════════════════════════════
+// Material CDK Overlay fix (PrimeNG conflict)
+// ═══════════════════════════════════════
+
+// Overlay container — always fixed on top
+.cdk-overlay-container {
+  position: fixed !important;
+  z-index: 1000 !important;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+// Backdrop — only for dialogs
+.cdk-overlay-backdrop {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000 !important;
+  pointer-events: auto;
+}
+
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+// Dialog wrapper — centered flexbox
+.cdk-global-overlay-wrapper {
+  display: flex !important;
+  position: fixed !important;
+  z-index: 1000 !important;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+// Overlay pane — keep default absolute for menus/tooltips
+.cdk-overlay-pane {
+  pointer-events: auto;
+  z-index: 1000 !important;
+}
+
+// Only dialogs get static positioning (inside the centered wrapper)
+.cdk-global-overlay-wrapper .cdk-overlay-pane {
+  position: static !important;
+  max-height: 90vh;
+}
+
+// ═══════════════════════════════════════
+// Uniform height: 32px for all controls
+// ═══════════════════════════════════════
+
+$ctrl-h: 32px;
+$font-sm: 12.5px;
+$radius: 6px;
+
+// ── Buttons ──
+.p-button {
+  height: $ctrl-h;
+  padding: 0 12px !important;
+  font-size: $font-sm !important;
+  line-height: $ctrl-h !important;
+  border-radius: $radius !important;
+  white-space: nowrap;
+
+  .p-button-icon {
+    font-size: $font-sm !important;
+  }
+
+  .p-button-label {
+    font-weight: 600;
+  }
+}
+
+// icon-only buttons (filter, action btns)
+.p-button.p-button-icon-only {
+  width: $ctrl-h;
+  padding: 0 !important;
+  justify-content: center;
+}
+
+// Primary fill
+.p-button:not(.p-button-outlined):not(.p-button-text):not(.p-button-success):not(.p-button-danger):not(.p-button-secondary):not(.p-button-warning):not(.p-button-info):not(.p-button-help) {
+  background: #C62828 !important;
+  border-color: #C62828 !important;
+  color: #fff !important;
+  &:hover { background: #8E0000 !important; border-color: #8E0000 !important; }
+  &:focus { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(198,40,40,0.2) !important; }
+}
+
+// Outlined
+.p-button.p-button-outlined {
+  background: #fff !important;
+  color: #374151 !important;
+  border: 1px solid #D1D5DB !important;
+  &:hover { background: #F9FAFB !important; border-color: #9CA3AF !important; }
+}
+
+// Text / icon-only action buttons in rows
+.p-button.p-button-text {
+  background: transparent !important;
+  color: #6B7280 !important;
+  border: none !important;
+  height: 28px;
+  width: 28px;
+  padding: 0 !important;
+  &:hover { background: #F3F4F6 !important; color: #1F2937 !important; }
+}
+
+.p-button.p-button-text.p-button-danger {
+  color: #C62828 !important;
+  &:hover { background: #FEF2F2 !important; }
+}
+
+.p-button.p-button-text.p-button-success {
+  color: #2E7D32 !important;
+  &:hover { background: #E8F5E9 !important; }
+}
+
+.p-button.p-button-success:not(.p-button-text) {
+  background: #2E7D32 !important; border-color: #2E7D32 !important;
+  &:hover { background: #1B5E20 !important; border-color: #1B5E20 !important; }
+}
+
+.p-button.p-button-danger:not(.p-button-text) {
+  background: #C62828 !important; border-color: #C62828 !important;
+}
+
+.p-button.p-button-secondary:not(.p-button-text) {
+  background: #6B7280 !important; border-color: #6B7280 !important;
+}
+
+// ── Inputs ──
+.p-inputtext {
+  height: $ctrl-h;
+  padding: 0 10px !important;
+  font-size: $font-sm !important;
+  border-radius: $radius !important;
+  line-height: $ctrl-h;
+
+  &:enabled:focus {
+    border-color: #C62828 !important;
+    box-shadow: 0 0 0 1px rgba(198,40,40,0.12) !important;
+  }
+}
+
+// search icon inside input
+.p-input-icon-left {
+  > i {
+    font-size: 13px;
+    top: 50% !important;
+    margin-top: 0 !important;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+  }
+  > .p-inputtext {
+    padding-left: 32px !important;
+  }
+}
+
+// ── Dropdown ──
+.p-dropdown {
+  height: $ctrl-h;
+  border-radius: $radius !important;
+
+  .p-dropdown-label {
+    padding: 0 10px;
+    line-height: $ctrl-h;
+    font-size: $font-sm;
+  }
+
+  .p-dropdown-trigger {
+    width: 28px;
+  }
+
+  &:not(.p-disabled).p-focus {
+    border-color: #C62828 !important;
+    box-shadow: 0 0 0 1px rgba(198,40,40,0.12) !important;
+  }
+}
+
+// ═══════════════════════════════════════
+// DataTable
+// ═══════════════════════════════════════
+
+.p-datatable {
+  .p-datatable-header {
+    background: #FFFFFF;
+    border: none;
+    padding: 12px 16px;
+  }
+
+  .p-datatable-thead > tr > th {
+    background: #F9FAFB;
+    color: #6B7280;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-color: #F3F4F6;
+    padding: 8px 14px;
+  }
+
+  .p-datatable-tbody > tr > td {
+    padding: 9px 14px;
+    border-color: #F3F4F6;
+    font-size: 13px;
+    color: #1F2937;
+  }
+
+  .p-datatable-tbody > tr:hover {
+    background: #FEF2F2 !important;
+  }
+
+  // sort icons — tiny
+  .p-sortable-column-icon {
+    font-size: 9px !important;
+    width: 9px;
+    height: 9px;
+    margin-left: 3px;
+    color: #D1D5DB;
+  }
+
+  .p-sortable-column.p-highlight {
+    color: #C62828 !important;
+    .p-sortable-column-icon { color: #C62828 !important; }
+  }
+
+  .p-paginator {
+    border: none;
+    padding: 6px 14px;
+    font-size: 12px;
+
+    .p-paginator-element {
+      min-width: 26px;
+      height: 26px;
+      font-size: 11px;
+    }
+
+    .p-dropdown {
+      height: 28px;
+      .p-dropdown-label { line-height: 28px; font-size: 12px; }
+    }
+
+    .p-paginator-current {
+      font-size: 11px;
+      color: #9CA3AF;
+    }
+  }
+}
+
+// ── Tags ──
+.p-tag {
+  padding: 2px 8px !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  border-radius: 4px !important;
+  line-height: 16px !important;
+}
+
+.p-tag.p-tag-success { background: #E8F5E9 !important; color: #2E7D32 !important; }
+.p-tag.p-tag-danger  { background: #FFCDD2 !important; color: #C62828 !important; }
+.p-tag.p-tag-warning { background: #FFF3E0 !important; color: #E65100 !important; }
+.p-tag.p-tag-info    { background: #E3F2FD !important; color: #1565C0 !important; }
+
+// ═══════════════════════════════════════
+// Sidebar (filter drawer)
+// ═══════════════════════════════════════
+
+.p-sidebar {
+  .p-sidebar-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid #F3F4F6;
+
+    .p-sidebar-header-content {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1F2937;
+    }
+  }
+
+  .p-sidebar-content {
+    padding: 20px;
+  }
+
+  // Inputs inside filter drawer — full width, same height
+  .p-inputtext {
+    width: 100%;
+  }
+
+  .p-dropdown {
+    width: 100%;
+  }
+}
+
+// ═══════════════════════════════════════
+// Page layout
+// ═══════════════════════════════════════
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #1F2937;
+  }
+}
+
+.header-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.table-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.table-toolbar-left {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.record-count {
+  font-size: 11.5px;
+  color: #9CA3AF;
+}
+
+// ── Filter drawer fields ──
+.filter-group {
+  margin-bottom: 16px;
+}
+
+.filter-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6B7280;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid #F3F4F6;
+}
+
+// ═══════════════════════════════════════
+// Material Dialog Overrides
+// ═══════════════════════════════════════
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 10px !important;
+}
+
+.mat-mdc-dialog-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #1F2937 !important;
+  padding: 16px 20px 4px !important;
+  letter-spacing: -0.2px;
+}
+
+.mat-mdc-dialog-content {
+  padding: 10px 20px 10px !important;
+  max-height: 70vh !important;
+}
+
+.mat-mdc-dialog-actions {
+  padding: 10px 20px 16px !important;
+  gap: 8px;
+  border-top: 1px solid #F3F4F6;
+
+  .mat-mdc-button-base {
+    height: 32px;
+    font-size: 12.5px;
+    border-radius: 6px;
+  }
+
+  .mdc-button--raised {
+    background-color: #C62828 !important;
+    &:hover { background-color: #8E0000 !important; }
+  }
+}
+
+// ═══════════════════════════════════════
+// Dialog form fields (label + input)
+// ═══════════════════════════════════════
+
+.dialog-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 14px;
+}
+
+.dialog-form-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 380px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-label .req {
+  color: #C62828;
+  margin-left: 1px;
+}
+
+.full-span {
+  grid-column: 1 / -1;
+}
+
+.section-divider {
+  border-bottom: 1px solid #F3F4F6;
+  padding-bottom: 4px;
+  margin-top: 2px;
+}
+
+.section-label-text {
+  font-size: 11px;
+  font-weight: 700;
+  color: #C62828;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// dialog inputs & dropdowns — use global $ctrl-h
+.dialog-form-grid, .dialog-form-col {
+  .p-inputtext {
+    width: 100%;
+  }
+
+  .p-dropdown {
+    width: 100%;
+  }
+
+  textarea.p-inputtext {
+    height: auto !important;
+    min-height: 60px;
+    resize: vertical;
+  }
+
+  .p-calendar {
+    width: 100%;
+
+    .p-inputtext {
+      width: 100%;
+    }
+  }
+}
+
+// utility
+.w-full { width: 100%; }

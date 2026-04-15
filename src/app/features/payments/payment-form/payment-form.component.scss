@@ -1,0 +1,14 @@
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  background: #F9FAFB;
+  border-radius: 6px;
+  border: 1px solid #F3F4F6;
+}
+
+.info-item { display: flex; flex-direction: column; gap: 2px; }
+.info-label { font-size: 10.5px; font-weight: 600; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.3px; }
+.info-value { font-size: 13px; font-weight: 600; color: #1F2937; &.amount { color: #2E7D32; } }

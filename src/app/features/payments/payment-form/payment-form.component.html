@@ -1,0 +1,40 @@
+<p-toast></p-toast>
+<h2 mat-dialog-title>Post Payment — {{ claim.claimNumber }}</h2>
+<mat-dialog-content>
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-label">Patient</span>
+      <span class="info-value">{{ claim.patientName }}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Payer</span>
+      <span class="info-value">{{ claim.payerName }}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Total Billed</span>
+      <span class="info-value">{{ claim.totalBilledAmount | currency }}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Approved</span>
+      <span class="info-value amount">{{ claim.approvedAmount | currency }}</span>
+    </div>
+  </div>
+
+  <form [formGroup]="form" class="dialog-form-col">
+    <div class="form-field">
+      <label class="form-label">Transaction Reference</label>
+      <input pInputText formControlName="transactionReference" placeholder="e.g., CHK-12345" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Adjustment Reason <span class="req">*</span></label>
+      <textarea pInputTextarea formControlName="adjustmentReason" rows="2" placeholder="Reason for write-off" class="w-full"></textarea>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || form.invalid">
+    {{ loading ? 'Processing...' : 'Post Payment' }}
+  </button>
+</mat-dialog-actions>

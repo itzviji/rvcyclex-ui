@@ -1,0 +1,38 @@
+<p-toast></p-toast>
+<h2 mat-dialog-title>{{ isEdit ? 'Edit User' : 'Create User' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form-grid">
+    <div class="form-field">
+      <label class="form-label">Full Name <span class="req">*</span></label>
+      <input pInputText formControlName="name" placeholder="Enter name" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Email <span class="req">*</span></label>
+      <input pInputText formControlName="email" placeholder="Email address" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Phone</label>
+      <input pInputText formControlName="phone" placeholder="Phone number" />
+    </div>
+
+    @if (!isEdit) {
+      <div class="form-field">
+        <label class="form-label">Password <span class="req">*</span></label>
+        <p-password formControlName="password" [toggleMask]="true" [feedback]="false" placeholder="Password" styleClass="w-full" inputStyleClass="w-full"></p-password>
+      </div>
+    }
+
+    <div class="form-field" [class.full-span]="isEdit">
+      <label class="form-label">Role <span class="req">*</span></label>
+      <p-dropdown [options]="roleOptions" formControlName="roleId" placeholder="Select role" styleClass="w-full"></p-dropdown>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || form.invalid">
+    {{ loading ? 'Saving...' : (isEdit ? 'Update' : 'Create') }}
+  </button>
+</mat-dialog-actions>

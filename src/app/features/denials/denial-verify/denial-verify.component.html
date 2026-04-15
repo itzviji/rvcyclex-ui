@@ -1,0 +1,48 @@
+<p-toast></p-toast>
+<h2 mat-dialog-title>Verify Denial — {{ denial.claimNumber }}</h2>
+<mat-dialog-content>
+  <div class="info-grid">
+    <div class="info-item">
+      <span class="info-label">Patient</span>
+      <span class="info-value">{{ denial.patientName }}</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">Denial Date</span>
+      <span class="info-value">{{ denial.denialDate }}</span>
+    </div>
+  </div>
+
+  @if (denial.scrubReasons && denial.scrubReasons.length > 0) {
+    <div class="scrub-section">
+      <span class="form-label">Scrub Reasons</span>
+      <div class="scrub-tags">
+        @for (reason of denial.scrubReasons; track reason) {
+          <span class="scrub-tag">{{ reason }}</span>
+        }
+      </div>
+    </div>
+  }
+
+  <form [formGroup]="form" class="dialog-form-grid">
+    <div class="form-field">
+      <label class="form-label">Reason Code <span class="req">*</span></label>
+      <input pInputText formControlName="reasonCode" placeholder="e.g., CO-16" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Category</label>
+      <input pInputText formControlName="category" placeholder="e.g., Eligibility" />
+    </div>
+
+    <div class="form-field full-span">
+      <label class="form-label">Detailed Reason <span class="req">*</span></label>
+      <textarea pInputTextarea formControlName="detailedReason" rows="3" placeholder="Provide detailed analysis" class="w-full"></textarea>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || form.invalid">
+    {{ loading ? 'Verifying...' : 'Verify Denial' }}
+  </button>
+</mat-dialog-actions>

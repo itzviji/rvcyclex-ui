@@ -1,0 +1,26 @@
+<p-toast></p-toast>
+<h2 mat-dialog-title>New Encounter</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form-col">
+    <div class="form-field">
+      <label class="form-label">Patient <span class="req">*</span></label>
+      <p-dropdown [options]="patientOptions" formControlName="patientId" placeholder="Select patient" [filter]="true" filterPlaceholder="Search..." styleClass="w-full"></p-dropdown>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Service Date <span class="req">*</span></label>
+      <p-calendar formControlName="serviceDate" dateFormat="yy-mm-dd" [showIcon]="true" placeholder="Select date" inputStyleClass="w-full"></p-calendar>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Diagnosis Notes</label>
+      <textarea pInputTextarea formControlName="diagnosisNotes" rows="3" placeholder="Enter diagnosis notes" class="w-full"></textarea>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || form.invalid">
+    {{ loading ? 'Creating...' : 'Create' }}
+  </button>
+</mat-dialog-actions>

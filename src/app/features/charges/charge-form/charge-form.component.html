@@ -1,0 +1,36 @@
+<p-toast></p-toast>
+<h2 mat-dialog-title>Add Charge</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form-col">
+    <div class="form-field">
+      <label class="form-label">ICD Code <span class="req">*</span></label>
+      <p-autoComplete formControlName="icdCode" [suggestions]="icdSuggestions" (completeMethod)="searchIcd($event)"
+                      field="icdCode" [dropdown]="true" placeholder="Search ICD codes..." styleClass="w-full">
+        <ng-template let-icd pTemplate="item">
+          <span class="code-item">{{ icd.icdCode }} — {{ icd.description }}</span>
+        </ng-template>
+      </p-autoComplete>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">CPT Code <span class="req">*</span></label>
+      <p-autoComplete formControlName="cptCode" [suggestions]="cptSuggestions" (completeMethod)="searchCpt($event)"
+                      field="cptCode" [dropdown]="true" placeholder="Search CPT codes..." styleClass="w-full">
+        <ng-template let-cpt pTemplate="item">
+          <span class="code-item">{{ cpt.cptCode }} — {{ cpt.description }} <span class="code-price">${{ cpt.defaultCharge }}</span></span>
+        </ng-template>
+      </p-autoComplete>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Units <span class="req">*</span></label>
+      <p-inputNumber formControlName="units" [min]="1" [showButtons]="true" inputStyleClass="w-full"></p-inputNumber>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || form.invalid">
+    {{ loading ? 'Adding...' : 'Add Charge' }}
+  </button>
+</mat-dialog-actions>

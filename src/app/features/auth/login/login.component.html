@@ -1,0 +1,106 @@
+<p-toast></p-toast>
+<div class="login-page">
+  <!-- Left branded panel -->
+  <div class="left-panel">
+    <div class="brand-overlay">
+      <div class="brand-content">
+        <div class="brand-icon">
+          <i class="pi pi-heart-fill"></i>
+        </div>
+        <h1>RvcycleX</h1>
+        <p class="brand-tagline">Revenue Cycle Management</p>
+        <div class="brand-divider"></div>
+        <p class="brand-description">
+          Streamline your healthcare billing workflow from patient registration
+          through claims processing, payments, and denial management.
+        </p>
+        <div class="brand-features">
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>End-to-end claims lifecycle</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Automated claim scrubbing</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Real-time analytics dashboard</span>
+          </div>
+          <div class="feature-item">
+            <i class="pi pi-check-circle"></i>
+            <span>Role-based access control</span>
+          </div>
+        </div>
+      </div>
+      <div class="brand-footer">
+        <span>Powered by RvcycleX Platform</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right login panel -->
+  <div class="right-panel">
+    <div class="login-wrapper">
+      <div class="login-header">
+        <h2>Welcome back</h2>
+        <p>Sign in to your account to continue</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="field">
+          <label for="email">Email Address</label>
+          <span class="p-input-icon-left full-width">
+            <i class="pi pi-envelope"></i>
+            <input id="email" type="email" pInputText formControlName="email"
+                   placeholder="you@company.com"
+                   class="full-width"
+                   [class.ng-invalid]="emailInvalid"
+                   [class.ng-dirty]="emailInvalid">
+          </span>
+          @if (emailInvalid) {
+            <small class="p-error">
+              {{ loginForm.get('email')?.hasError('required') ? 'Email is required' : 'Please enter a valid email' }}
+            </small>
+          }
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <p-password id="password" formControlName="password"
+                      placeholder="Enter your password"
+                      [toggleMask]="true"
+                      [feedback]="false"
+                      styleClass="full-width"
+                      inputStyleClass="full-width"
+                      [class.ng-invalid]="passwordInvalid"
+                      [class.ng-dirty]="passwordInvalid">
+          </p-password>
+          @if (passwordInvalid) {
+            <small class="p-error">Password is required</small>
+          }
+        </div>
+
+        <p-button type="submit" label="Sign In" icon="pi pi-sign-in"
+                  styleClass="full-width login-btn"
+                  [loading]="loading"
+                  [disabled]="loading">
+        </p-button>
+      </form>
+
+      @if (showDevLogin) {
+        <p-divider align="center">
+          <span class="dev-divider-text">Dev Quick Login</span>
+        </p-divider>
+        <div class="dev-grid">
+          @for (user of devUsers; track user.role) {
+            <button class="dev-card" (click)="devLogin(user)">
+              <i [class]="user.icon"></i>
+              <span>{{ user.label }}</span>
+            </button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+.w-full { width: 100%; }
+:host ::ng-deep .w-full .p-dropdown { width: 100%; }
+.font-semibold { font-weight: 600; }
+.text-center { text-align: center; color: #9CA3AF; }
+.p-4 { padding: 24px !important; }
+.notes-cell { max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -1,0 +1,70 @@
+<p-toast></p-toast>
+<h2 mat-dialog-title>{{ isEdit ? 'Edit Patient' : 'Register Patient' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="dialog-form-grid">
+    <div class="form-field">
+      <label class="form-label">Full Name <span class="req">*</span></label>
+      <input pInputText formControlName="name" placeholder="Enter full name" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Date of Birth <span class="req">*</span></label>
+      <p-calendar formControlName="dob" dateFormat="yy-mm-dd" [showIcon]="true" placeholder="Select date" inputStyleClass="w-full"></p-calendar>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Gender <span class="req">*</span></label>
+      <p-dropdown [options]="genderOptions" formControlName="gender" placeholder="Select gender" styleClass="w-full"></p-dropdown>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Phone <span class="req">*</span></label>
+      <input pInputText formControlName="phone" placeholder="Phone number" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Email</label>
+      <input pInputText formControlName="email" placeholder="Email address" />
+    </div>
+
+    <div class="form-field full-span">
+      <label class="form-label">Address</label>
+      <input pInputText formControlName="address" placeholder="Street address" />
+    </div>
+
+    <div class="full-span section-divider">
+      <span class="section-label-text">Insurance Information</span>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Payer Name <span class="req">*</span></label>
+      <input pInputText formControlName="payerName" placeholder="Insurance payer" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Policy Number <span class="req">*</span></label>
+      <input pInputText formControlName="policyNumber" placeholder="Policy #" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Coverage Details <span class="req">*</span></label>
+      <input pInputText formControlName="coverageDetails" placeholder="Coverage info" />
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Coverage Limit ($) <span class="req">*</span></label>
+      <p-inputNumber formControlName="coverageLimit" mode="currency" currency="USD" locale="en-US" placeholder="0.00" inputStyleClass="w-full"></p-inputNumber>
+    </div>
+
+    <div class="form-field">
+      <label class="form-label">Eligibility Status <span class="req">*</span></label>
+      <p-dropdown [options]="statusOptions" formControlName="eligibilityStatus" styleClass="w-full"></p-dropdown>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || form.invalid">
+    {{ loading ? 'Saving...' : (isEdit ? 'Update' : 'Register') }}
+  </button>
+</mat-dialog-actions>

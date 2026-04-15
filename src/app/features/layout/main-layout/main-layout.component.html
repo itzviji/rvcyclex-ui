@@ -1,0 +1,93 @@
+<mat-sidenav-container class="layout-container">
+  <mat-sidenav [opened]="sidenavOpened" mode="side" class="sidenav">
+    <!-- Brand -->
+    <div class="sidenav-brand">
+      <div class="brand-icon">
+        <mat-icon>favorite</mat-icon>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">RvcycleX</span>
+        <span class="brand-sub">Revenue Cycle</span>
+      </div>
+    </div>
+
+    <!-- Section label -->
+    <div class="nav-section">Menu</div>
+
+    <!-- Navigation -->
+    <nav class="sidenav-nav">
+      @for (item of visibleNavItems; track item.route) {
+        <a class="nav-item" [routerLink]="item.route" routerLinkActive="nav-active">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidenav-footer">
+      <div class="footer-user">
+        <div class="avatar-small">{{ userInitial }}</div>
+        <div class="footer-user-info">
+          <span class="footer-name">{{ authService.getUserName() }}</span>
+          <span class="footer-role">{{ authService.getRole() }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="main-content">
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" (click)="sidenavOpened = !sidenavOpened">
+          <mat-icon>{{ sidenavOpened ? 'menu_open' : 'menu' }}</mat-icon>
+        </button>
+      </div>
+
+      <div class="topbar-right">
+        <button class="topbar-icon-btn" matTooltip="Notifications" [matBadge]="3" matBadgeColor="warn" matBadgeSize="small">
+          <mat-icon>notifications_none</mat-icon>
+        </button>
+
+        <button class="profile-btn" [matMenuTriggerFor]="profileMenu">
+          <div class="avatar">{{ userInitial }}</div>
+          <div class="profile-info">
+            <span class="profile-name">{{ authService.getUserName() }}</span>
+            <span class="profile-role">{{ authService.getRole() }}</span>
+          </div>
+          <mat-icon class="profile-chevron">expand_more</mat-icon>
+        </button>
+
+        <mat-menu #profileMenu="matMenu" xPosition="before">
+          <div class="menu-header">
+            <div class="avatar menu-avatar">{{ userInitial }}</div>
+            <div>
+              <div class="menu-name">{{ authService.getUserName() }}</div>
+              <div class="menu-email">{{ authService.getRole() }}</div>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>
+            <mat-icon>person_outline</mat-icon>
+            <span>My Profile</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()" class="logout-item">
+            <mat-icon>logout</mat-icon>
+            <span>Sign Out</span>
+          </button>
+        </mat-menu>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,8 @@
+.encounter-selector {
+  margin-bottom: 20px;
+}
+
+:host ::ng-deep .encounter-dd { width: 100%; max-width: 500px; }
+.font-semibold { font-weight: 600; }
+.text-center { text-align: center; color: #9CA3AF; }
+.p-4 { padding: 24px !important; }
